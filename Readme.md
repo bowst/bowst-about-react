@@ -18,7 +18,9 @@ Each branch in the repo represents a stage of the set up.  Without further cerem
 
 1. Let's create our first react component!  Inside the `src/` directory, let's add an `app` folder.  Inside that folder, let's add an `app.jsx` file, which will be the entry point for our app.  In this file, we'll create our component by creating a new class which extends the React.Component class.
 2. Now we need to inject our component into the DOM in the browser.  This is where the `react-dom` package will be used.  Create a file in `./src/` called `mount.jsx`, and take a look at the code to link the DOM with our react component.
-3. 
+3. As we discussed in Step 1.4, we need a way to compile our JSX code into plain old javascript.  At time of this writing, [Webpack](https://webpack.github.io/docs/) was quickly emerging as the standard for compiling and bundling front-end code.  By using file format specific 'loaders', which are pulled down as seperate packages, webpack can bundle a number of different file formats, including JSX, SASS, LESS, CoffeeScript, etc.  Let's install it using, you guessed it, the following command: `npm install --save-dev webpack`
+4. Next we're going to need some webpack loaders to compile our JSX file.  We here at Bowst like to use Babel, which will translate our JSX into plain old javascript.  As a bonus, it will also compile our ES6 syntax into plain old javascript as well!  Babel is quite modular, and thus requires several node packages.  Install them using the following command: `npm install --save-dev babel-core babel-loader babel-preset-react babel-preset-es2015 babel-preset-stage-0`
+
 
 
 
