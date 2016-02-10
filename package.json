@@ -1,0 +1,25 @@
+{
+  "name": "bowst-about-react",
+  "version": "1.0.0",
+  "description": "Code base for the Bowst about React presentation",
+  "main": " ",
+  "scripts": {
+    "test": " "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bowst/bowst-about-react.git"
+  },
+  "keywords": [
+    "tutorial",
+    "reactjs",
+    "redux",
+    "bowst"
+  ],
+  "author": "Drew Trafton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bowst/bowst-about-react/issues"
+  },
+  "homepage": "https://github.com/bowst/bowst-about-react#readme"
+}
