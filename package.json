@@ -4,7 +4,7 @@
   "description": "Code base for the Bowst about React presentation",
   "main": " ",
   "scripts": {
-    "test": " "
+    "build-dev": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
