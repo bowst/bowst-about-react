@@ -19693,6 +19693,10 @@
 
 	var _EditNote2 = _interopRequireDefault(_EditNote);
 
+	var _Note = __webpack_require__(165);
+
+	var _Note2 = _interopRequireDefault(_Note);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19712,19 +19716,55 @@
 	//Bring in our other components
 
 
+	//bring in the component we created to render each note
+
+
 	//This is also ES6 syntax, it's similar to module.exports = React.createClass({});
 	//whatever is `exported` from this file will be available for other files to import (like we did with react above)
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
 
-		function App() {
+		//since this component controls the list of notes,
+		//let's set up the default state (notes as an empty array) in the constructor() method
+
+		function App(props) {
 			_classCallCheck(this, App);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+
+			_this.state = {
+				notes: []
+			};
+			return _this;
 		}
 
+		/*
+	 	This is the method that is passed to the EditNote component,
+	 	basically providing an interface for manipulating this components state
+	 */
+
+
 		_createClass(App, [{
+			key: "_addNote",
+			value: function _addNote(note) {
+				/*
+	   	This method takes the note we want to add and creates a new list using the concat function.
+	   	In other words, if you checked newList === this.state.notes, you'd get FALSE.
+	   	This is different from using this.state.notes.push(note), because this would simply add the note 
+	   	to the end of the existing array (the reference comparison would yield TRUE).
+	   		This is called Immutability, and setting it up in this way will allow us to easily implement some performance 
+	   	enhancements later if the need arises.  Making your state immutable is not required but is highly recommended, 
+	   	as it makes your applications data flow less obscure. 
+	   */
+				var newList = this.state.notes.concat(note);
+
+				//again, calling this.setState will update the state and trigger re-rendering of the component
+				this.setState({
+					notes: newList
+				});
+			}
+		}, {
 			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
@@ -19735,7 +19775,21 @@
 						null,
 						"Bowst About React - Notetaking App"
 					),
-					_react2.default.createElement(_EditNote2.default, null)
+					_react2.default.createElement(_EditNote2.default, { addNote: this._addNote.bind(this) }),
+					_react2.default.createElement("br", null),
+					_react2.default.createElement("br", null),
+					_react2.default.createElement(
+						"div",
+						null,
+						this.state.notes.map(function (note, index) {
+							/*
+	      	See that key prop?  That's a special prop that React uses for tracking when 
+	      	you generate nodes from an array.  I'm just using the index for now but in real applications
+	      	it's generally better to use an id or something that is intrinsically tied to the data
+	      */
+							return _react2.default.createElement(_Note2.default, { note: note, key: index });
+						})
+					)
 				);
 			}
 		}]);
@@ -20148,11 +20202,15 @@
 			return _this;
 		}
 
-		//this method (explained below) updates the state everytime the input is changed
+		//RECOMMENDED - define the properties that this component uses. See: https://facebook.github.io/react/docs/reusable-components.html
+		//this will help other developers interacting with your component understand who it should be used
 
 
 		_createClass(EditNote, [{
 			key: "_handleChange",
+
+
+			//this method (explained below) updates the state everytime the input is changed
 			value: function _handleChange(event) {
 				this.setState({
 					note: event.target.value
@@ -20170,6 +20228,18 @@
 				});
 			}
 		}, {
+			key: "_addNote",
+			value: function _addNote() {
+				/*
+	   	In this method, we're call another method passed in via the props.  Checkout app.jsx to see how this is done.
+	   	This component doesn't care what "adding a note" means, it just tells it's parent component to do it when the button is clicked.
+	   */
+				this.props.addNote(this.state.note);
+
+				//Here we use the same method to clean out the note and get ready for the next one
+				this._clearInput();
+			}
+		}, {
 			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
@@ -20183,6 +20253,12 @@
 						{
 							onClick: this._clearInput.bind(this) },
 						"Clear Note"
+					),
+					_react2.default.createElement(
+						"button",
+						{
+							onClick: this._addNote.bind(this) },
+						"Add Note"
 					)
 				);
 			}
@@ -20191,7 +20267,69 @@
 		return EditNote;
 	}(_react2.default.Component);
 
+	EditNote.propTypes = {
+		addNote: _react2.default.PropTypes.func
+	};
 	exports.default = EditNote;
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Note = function (_React$Component) {
+		_inherits(Note, _React$Component);
+
+		function Note() {
+			_classCallCheck(this, Note);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Note).apply(this, arguments));
+		}
+
+		_createClass(Note, [{
+			key: 'render',
+
+
+			//This component is only reponsible for rendering the note
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.props.note,
+					_react2.default.createElement('hr', null)
+				);
+			}
+			//RECOMMENDED - define the properties that this component uses. See: https://facebook.github.io/react/docs/reusable-components.html
+			//this will help other developers interacting with your component understand who it should be used
+
+		}]);
+
+		return Note;
+	}(_react2.default.Component);
+
+	Note.propTypes = {
+		note: _react2.default.PropTypes.string
+	};
+	exports.default = Note;
 
 /***/ }
 /******/ ]);

@@ -21,6 +21,12 @@ export default class EditNote extends React.Component{
 		};
 	}
 
+	//RECOMMENDED - define the properties that this component uses. See: https://facebook.github.io/react/docs/reusable-components.html
+	//this will help other developers interacting with your component understand who it should be used
+	static propTypes = {
+		addNote: React.PropTypes.func
+	};
+
 	//this method (explained below) updates the state everytime the input is changed
 	_handleChange(event){
 		this.setState({
@@ -36,6 +42,17 @@ export default class EditNote extends React.Component{
 		this.setState({
 			note: ""
 		});
+	}
+
+	_addNote(){
+		/*
+			In this method, we're call another method passed in via the props.  Checkout app.jsx to see how this is done.
+			This component doesn't care what "adding a note" means, it just tells it's parent component to do it when the button is clicked.
+		*/
+		this.props.addNote(this.state.note);
+
+		//Here we use the same method to clean out the note and get ready for the next one
+		this._clearInput();
 	}
 
 	render(){
@@ -65,6 +82,14 @@ export default class EditNote extends React.Component{
 				<button
 					onClick={this._clearInput.bind(this)}>
 					Clear Note
+				</button>
+
+				{/*
+					We added this button to add the note.  It call the _addNote method defined above when clicked.
+				*/}
+				<button
+					onClick={this._addNote.bind(this)}>
+					Add Note
 				</button>
 			</div>
 		);
