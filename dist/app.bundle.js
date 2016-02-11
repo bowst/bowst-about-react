@@ -19673,7 +19673,72 @@
 /* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _EditNote = __webpack_require__(160);
+
+	var _EditNote2 = _interopRequireDefault(_EditNote);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //this is ES6 syntax, it's essentially equivalent to: var React = require('react')
+
+
+	//Bring in our other components
+
+
+	//This is also ES6 syntax, it's similar to module.exports = React.createClass({});
+	//whatever is `exported` from this file will be available for other files to import (like we did with react above)
+
+	var App = function (_React$Component) {
+		_inherits(App, _React$Component);
+
+		function App() {
+			_classCallCheck(this, App);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+		}
+
+		_createClass(App, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"h1",
+						null,
+						"Bowst About React - Notetaking App"
+					),
+					_react2.default.createElement(_EditNote2.default, null)
+				);
+			}
+		}]);
+
+		return App;
+	}(_react2.default.Component);
+
+	exports.default = App;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -19697,30 +19762,75 @@
 	//This is also ES6 syntax, it's similar to module.exports = React.createClass({});
 	//whatever is `exported` from this file will be available for other files to import (like we did with react above)
 
-	var App = function (_React$Component) {
-		_inherits(App, _React$Component);
+	var EditNote = function (_React$Component) {
+		_inherits(EditNote, _React$Component);
 
-		function App() {
-			_classCallCheck(this, App);
+		//ES6 makes JS class more inline with real object-oriented programming
+		//this constructor method is called when an instance object is initialized
+		//we'll cover the 'props' argument later
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+		function EditNote(props) {
+			_classCallCheck(this, EditNote);
+
+			//Set the initial state of this component
+			//the note property will hold the text of our note
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditNote).call(this, props));
+			//we are extending or 'inheriting' another class here
+			//we call the special 'super' method, which will call the constructor in the class we are inheriting from
+			//in this case, it will call the constructor on the React Component object
+
+
+			_this.state = {
+				note: ""
+			};
+			return _this;
 		}
 
-		_createClass(App, [{
-			key: 'render',
+		//this method (explained below) updates the state everytime the input is changed
+
+
+		_createClass(EditNote, [{
+			key: "_handleChange",
+			value: function _handleChange(event) {
+				this.setState({
+					note: event.target.value
+				});
+			}
+		}, {
+			key: "_clearInput",
+			value: function _clearInput() {
+				/*
+	   	Since we're now controlling the value of the textfield with the state,
+	   	clearing the textfield becomes trivial.  We just set this.state.note to an empty string.
+	   */
+				this.setState({
+					note: ""
+				});
+			}
+		}, {
+			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
-					'h1',
+					"div",
 					null,
-					'Hello World!'
+					_react2.default.createElement("textarea", {
+						value: this.state.note,
+						onChange: this._handleChange.bind(this) }),
+					_react2.default.createElement(
+						"button",
+						{
+							onClick: this._clearInput.bind(this) },
+						"Clear Note"
+					)
 				);
 			}
 		}]);
 
-		return App;
+		return EditNote;
 	}(_react2.default.Component);
 
-	exports.default = App;
+	exports.default = EditNote;
 
 /***/ }
 /******/ ]);
