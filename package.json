@@ -4,6 +4,7 @@
   "description": "Code base for the Bowst about React presentation",
   "main": " ",
   "scripts": {
+    "dev": "webpack-dev-server --port 9999 --devtool cheap-eval-source-map --progress --colors --inline --content-base dist",
     "build-dev": "webpack --config webpack.config.js"
   },
   "repository": {
