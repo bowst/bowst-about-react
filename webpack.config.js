@@ -21,7 +21,8 @@ module.exports = {
 				test: /\.jsx$/,
 				//define the loaders to use for files that meet the test defined above
 				//use babel and include the es2015, react, and stage-0 presets
-				loaders: ['babel?'+JSON.stringify({presets:['es2015', 'react', 'stage-0']})], 
+				//add in react-hot-loader, MUST be first element in this array
+				loaders: ['react-hot', 'babel?'+JSON.stringify({presets:['es2015', 'react', 'stage-0']})], 
 				//make sure to exclude anything in the node_modules folder
 				exclude: /(node_modules)/,
 				//tell babel loader to cache the results of the loader for faster builds

@@ -33,6 +33,7 @@ Each branch in the repo represents a stage of the set up.  Without further cerem
 ##Step 4 - A better way to dev
 
 1. So one thing you've probably noticed by now is that it's a huge pain to run the build script every....single...time you make a change. And if you were wondering if there was a better way, you were totally headed in the right direction.  You can add a `--watch` option to the webpack build command!  This works really well, but there's something even better.  Webpack has a tool called `webpack-dev-server`; it's a bit complicated to set up but I promise you'll be madly in love before long.  Basically, it creates an in-memory representation of the bundled files and serves it at the same path as the actual build file.  Since this file is in-memory and not in the directory, it means no more git conflicts in compiled assets torching your merges.  Awesome!  Plus it automaticall reloads the page when you make a change.  Convienient!
+2. But wait, there's more.  With webpack-dev-server, you there is an option to do 'hot' module replacement.  Basically, this applies your changes without reloading the page.  Wait...even my react components, you ask?  ABSOLUTELY, and it's the hotness.  All you'll need is the react-hot-loader package (`npm install --save-dev react-hot-loader`) and a bit of configuration. Just add the `--hot` option to our dev command, tell webpack to use the react-hot-loader, and you're good to go.
 
 
 ##Key Concepts
