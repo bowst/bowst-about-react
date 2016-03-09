@@ -28,6 +28,15 @@ module.exports = {
 				//tell babel loader to cache the results of the loader for faster builds
 				cacheDirectory: true
 		    },
+		    { 	//ok, now we're loading just .js files, we need to tell webpack how to load them as well.
+				test: /\.js$/,
+				//use the same loader
+				loaders: ['babel?'+JSON.stringify({presets:['es2015', 'react', 'stage-0']})], 
+				//make sure to exclude anything in the node_modules folder
+				exclude: /(node_modules)/,
+				//tell babel loader to cache the results of the loader for faster builds
+				cacheDirectory: true
+		    },
 		    /*
 		    	Specify the loaders for SCSS files
 	    	*/
